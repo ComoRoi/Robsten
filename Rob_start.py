@@ -53,6 +53,6 @@ if rt > ct :   # 실행시간이 도달하지 않음
     exit()
 
 elif rt <= ct :  # 실행가능 시간임
-    os.system("/usr/bin/python3 /Users/rsi/tools/Robsten/main.py")
+    os.system("/opt/homebrew/bin/python3 /Users/rsi/github/Robsten/main.py")
     writetime()
 

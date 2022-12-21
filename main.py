@@ -24,15 +24,14 @@ tokenAddress = comConSet['rcvWalletAddress']
 exeDir = comConSet['exeDir']
 
 # Window 옵션 생성
-options = webdriver.ChromeOptions()
+chrome_options = webdriver.ChromeOptions()
+
 # Window 창 숨기는 옵션 추가
-#options.add_argument("headless")
+chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--incognito')  # Option 기능 테스트를 위해 임시로 코드 추가
 
-#driver = webdriver.Chrome(executable_path='/opt/Webdriver/chromedriver')
-
-chrome = Service('/opt/Webdriver/chromedriver')
-driver = webdriver.Chrome(service=chrome, options=options)
-
+chrome_path='/opt/Webdriver/chromedriver'
+driver = webdriver.Chrome(chrome_path, chrome_options=chrome_options)
 
 def currentTime():
     global nowDatetime
@@ -56,10 +55,13 @@ if __name__ == '__main__':
         print(currentTime() + targetService + 'Selenium can not open the web.')
 
     try:
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "address"))).send_keys(tokenAddress)
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "address"))).send_keys(tokenAddress)
         #driver.find_element((By.ID,"address")).send_keys(tokenAddress)
         #driver.find_element(By.XPATH, '/html/body/div[1]/main/div/div[1]/div/form/button').click()
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/main/div/div[1]/div/form/button'))).click()
+        # WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/main/div/div[1]/div/form/button'))).click()
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/main/div[2]/div[1]/div/form/div/input'))).click()
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/main/div[2]/div[1]/div/form/button'))).click()
+
         deltatime = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,'/html/body/div[1]/main/div/div[1]/div/div/div/b[2]'))).text
         print(currentTime() +"Will be retry in "+deltatime)
         ### https: // www.daleseo.com / python - time /
